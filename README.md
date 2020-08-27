@@ -3,6 +3,7 @@
 Build on Python 3.8.5 with PyBluez.
 
 # XML Devices Output
+<b>devices.xml</b>
 ```
 <devices>
 	<device>
