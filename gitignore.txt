@@ -1,0 +1,4 @@
+*.pyc
+*.pyo
+*.log
+devices.xml
