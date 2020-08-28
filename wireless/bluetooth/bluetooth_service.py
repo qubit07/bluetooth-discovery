@@ -4,6 +4,8 @@ import sqlite3
 import threading
 import logging
 from xml_handler import XmlHander
+from device import Device
+from service import Service
 
 class BluetoothService:
 
@@ -31,4 +33,23 @@ class BluetoothService:
             if (addr,) not in self.found_devs:
                 logging.log(logging.INFO,"found new device: %s - %s" % (addr, name))
                 self.found_devs.update({addr:name})
-                self.xmlHandler.write(addr, name)
+                device = Device(addr, name)
+                self.find_services(device)
+                self.xmlHandler.write(device)
+
+    def find_services(self, device):
+        logging.log(logging.INFO,"start service discovery for addr: %s" % (device.addr))
+        services = bluetooth.find_service(address=device.addr)
+
+        for service in services:
+            host = service['host']
+            name = service['name']
+            protocol = service['protocol']
+            port = service['port']
+            provider = service['provider']
+            description = service['description']
+
+            if name is not None:
+                logging.log(logging.INFO,"found service: %s" % (name))
+                s = Service(host, protocol, name, provider, port, description)
+                device.add_service(s)
