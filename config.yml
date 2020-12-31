@@ -1,0 +1,3 @@
+  data:
+    mongodb:
+      uri: mongodb://mongodb/bluetooth
