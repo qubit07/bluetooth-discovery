@@ -10,7 +10,7 @@ class BluetoothService:
         print("starting discover devices")
         devices = bluetooth.discover_devices(lookup_names=True)
         for (addr,name) in devices:
-            device = BluetoothRepository.find({addr:name})
+            device = BluetoothRepository.find('devices', {addr:name})
             print("db device: %s" % (device))
 
             if (addr,) not in device:
