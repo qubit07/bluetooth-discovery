@@ -11,9 +11,8 @@ class BluetoothService:
         devices = bluetooth.discover_devices(lookup_names=True)
         for (addr,name) in devices:
             device = BluetoothRepository.find_one('devices', {addr:name})
-            print("db device: %s" % (device))
 
-            if (BluetoothRepository.already_exits('devices', device)):
+            if (device is None):
                 print("found new device: %s - %s" % (addr, name))
                 BluetoothRepository.insert('devices', {addr:name})     
 

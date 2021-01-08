@@ -17,8 +17,3 @@ class BluetoothRepository:
   @staticmethod
   def find_one(collection, data):
     return BluetoothRepository.DATABASE[collection].find_one(data)
-
-  @staticmethod
-  def already_exits(collection, data):
-    data = BluetoothRepository.DATABASE[collection].find_one(data)
-    return bool(data)
