@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 class BluetoothRepository:
-  URI = "mongodb://mongodb:27017"
+  URI = "http://localhost:27017"
   DATABASE = None
 
   @staticmethod

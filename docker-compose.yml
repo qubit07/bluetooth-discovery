@@ -5,12 +5,16 @@ services:
   mongodb:
     image: mongo:bionic
     container_name: mongodb
+    ports: 
+      - 27017:27017
     volumes: 
       - ./data:/data/db
+    
 
   bluetooth:
     build: .
     container_name: bluetooth-discover
     privileged: true
+    network_mode: "host"
     depends_on: 
       - mongodb
