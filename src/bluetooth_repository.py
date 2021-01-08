@@ -15,5 +15,10 @@ class BluetoothRepository:
     return BluetoothRepository.DATABASE[collection].insert(data)
 
   @staticmethod
-  def find(collection, data):
-    return BluetoothRepository.DATABASE[collection].find(data)
+  def find_one(collection, data):
+    return BluetoothRepository.DATABASE[collection].find_one(data)
+
+  @staticmethod
+  def already_exits(collection, data):
+    data = BluetoothRepository.DATABASE[collection].find_one(data)
+    return bool(data)
