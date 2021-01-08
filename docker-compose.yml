@@ -7,12 +7,20 @@ services:
     container_name: mongodb
     volumes: 
       - ./data:/data/db
+    networks: 
+      - backend
 
   bluetooth:
     build: .
     container_name: bluetooth-discover
     privileged: true
-    network_mode: "host"
+    #network_mode: "host"
     depends_on: 
       - mongodb
+    networks: 
+      - backend
+
+networks: 
+  backend:
+    driver: bridge
 
