@@ -13,3 +13,7 @@ class BluetoothRepository:
   @staticmethod
   def insert(collection, data):
     return BluetoothRepository.DATABASE[collection].insert(data)
+
+  @staticmethod
+  def find(collection, data):
+    return BluetoothRepository.DATABASE[collection].find(data)

@@ -9,6 +9,7 @@ services:
       - 27017:27017
     volumes: 
       - ./data:/data/db
+    restart: always
     
 
   bluetooth:
@@ -18,3 +19,4 @@ services:
     network_mode: "host"
     depends_on: 
       - mongodb
+    restart: always
