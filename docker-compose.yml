@@ -12,6 +12,7 @@ services:
     build: .
     container_name: bluetooth-discover
     privileged: true
+    network_mode: "host"
     depends_on: 
       - mongodb
 
