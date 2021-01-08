@@ -7,8 +7,7 @@ services:
     container_name: mongodb
     volumes: 
       - ./data:/data/db
-    networks: 
-      - backend
+    network_mode: "host"
 
   bluetooth:
     build: .
@@ -17,10 +16,3 @@ services:
     network_mode: "host"
     depends_on: 
       - mongodb
-    networks: 
-      - backend
-
-networks: 
-  backend:
-    driver: bridge
-
