@@ -14,7 +14,7 @@ class BluetoothService:
             if (addr,) not in self.found_devs:
                 print("found device: %s - %s" % (addr, name))
                 self.found_devs.update({addr:name})
-                BluetoothRepository.insert('devices', devices)     
+                BluetoothRepository.insert('devices', {addr:name})     
                 #self.find_services(addr)
 
     def find_services(self, addr):
