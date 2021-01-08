@@ -10,12 +10,12 @@ class BluetoothService:
     def find_devs(self):
         print("starting discover devices")
         devices = bluetooth.discover_devices(lookup_names=True)
-        print(devices)
         for (addr,name) in devices:
             if (addr,) not in self.found_devs:
-                print("found new device: %s - %s" % (addr, name))
+                print("found device: %s - %s" % (addr, name))
                 self.found_devs.update({addr:name})
-                self.find_services(addr)
+                BluetoothRepository.insert('devices', devices)     
+                #self.find_services(addr)
 
     def find_services(self, addr):
         print("start service discovery for addr: %s" % (addr))
