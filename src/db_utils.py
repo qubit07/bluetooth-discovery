@@ -54,7 +54,7 @@ def insert_devices(conn, devices):
 def insert_services(conn, services):
     cursor = conn.cursor()
     for service in services:
-        cursor.execute('SELECT * FROM services WHERE name=? AND ', (service['name'], service['protocol'], service['port']))
+        cursor.execute('SELECT * FROM services WHERE name=? AND protocol=? AND port=?', (service['name'], service['protocol'], service['port']))
         existing_device = cursor.fetchone()
 
         if existing_device == None:
