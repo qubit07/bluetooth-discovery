@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 
 def load_env_variables():
-    load_dotenv()
+    dotenv_path = "../environment.env"
+    load_dotenv(dotenv_path)
 
 def get_mongo_connection_string():
     return os.getenv('MONGO_CONNECTION_STRING')
