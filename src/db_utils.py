@@ -10,7 +10,6 @@ def get_connection_string():
     return os.getenv('DB_CONNECTION_STRING')
 
 def connect_to_database(conn_str):
-    print("try connect to database: %s" % conn_str);
     if conn_str is None:
         raise ValueError("connection string not found in environment variables.")
     conn = sqlite3.connect(conn_str)
@@ -43,6 +42,7 @@ def create_services_table(conn):
 def insert_devices(conn, devices):
     cursor = conn.cursor()
     for (addr, name) in devices:
+        print("insert device: %s" % addr)
         cursor.execute('SELECT * FROM devices WHERE address=?', (addr))
         existing_device = cursor.fetchone()
 
