@@ -54,10 +54,11 @@ def insert_devices(conn, devices):
 def insert_services(conn, services):
     cursor = conn.cursor()
     for service in services:
-        cursor.execute('SELECT * FROM services WHERE name=? AND protocol=? AND port=?', (service['name'], service['protocol'], service['port']))
+        print(f"add new service:  name = {service['name']}, protocol = {service['protocol']}, port = {service['port']}")
+        cursor.execute('SELECT * FROM services WHERE name=? AND protocol=? AND port=?', [service['name'], service['protocol'], service['port']])
         existing_device = cursor.fetchone()
 
-        if existing_device == None:
+        if existing_device == None and service['name'] != None:
             cursor.execute('INSERT INTO services (address, name) VALUES (?, ?, ?)', (service['name'], service['protocol'], service['port']))
             conn.commit()
             print(f"add new service:  name = {service['name']}, protocol = {service['protocol']}, port = {service['port']}")
