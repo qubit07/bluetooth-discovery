@@ -59,7 +59,7 @@ def insert_services(conn, services):
         existing_device = cursor.fetchone()
 
         if existing_device == None and service['name'] != None:
-            cursor.execute('INSERT INTO services (address, name) VALUES (?, ?, ?)', (service['name'], service['protocol'], service['port']))
+            cursor.execute('INSERT INTO services (name, protocol, port) VALUES (?, ?, ?)', (service['name'], service['protocol'], service['port']))
             conn.commit()
             print(f"add new service:  name = {service['name']}, protocol = {service['protocol']}, port = {service['port']}")
 
