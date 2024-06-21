@@ -42,12 +42,11 @@ def create_services_table(conn):
 def insert_devices(conn, devices):
     cursor = conn.cursor()
     for (addr, name) in devices:
-        print("insert device: %s" % addr)
-        cursor.execute('SELECT * FROM devices WHERE address=?', str(addr))
+        cursor.execute('SELECT * FROM devices WHERE address=?', (addr,))
         existing_device = cursor.fetchone()
 
         if existing_device == None:
-            cursor.execute('INSERT INTO devices (address, name) VALUES (?, ?)', (str(addr), name))
+            cursor.execute('INSERT INTO devices (address, name) VALUES (?, ?)', (addr, name))
             conn.commit()
             print(f"add new device: address = {addr}, name = {name}")
 
