@@ -10,7 +10,7 @@ print("connect to database: %s" % conn_str)
 print("starting discover devices!")
 while True:
     devices = find_devs()
-    print("found number of devices: %s" % (len(devices.length)))
+    print("found number of devices: %s" % (len(devices)))
     insert_devices(devices)
     
     for (addr,name) in devices:
