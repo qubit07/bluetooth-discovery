@@ -1,10 +1,12 @@
 import time
-from db_utils import load_env_variables, get_connection_string, connect_to_database, insert_devices, insert_services
+from db_utils import load_env_variables, get_connection_string, connect_to_database, insert_devices, insert_services, create_devices_table, create_services_table
 from bluetooth_utils import find_devs, find_services
 
 load_env_variables()
 conn_str = get_connection_string()
 db = connect_to_database(conn_str)
+create_devices_table(db)
+create_services_table(db)
 print("connect to database: %s" % conn_str)
 
 print("starting discover devices!")
