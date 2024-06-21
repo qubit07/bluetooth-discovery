@@ -13,11 +13,11 @@ print("starting discover devices!")
 while True:
     devices = find_devs()
     print("found number of devices: %s" % (len(devices)))
-    insert_devices(devices)
+    insert_devices(db, devices)
     
     for (addr,name) in devices:
         services = find_services(addr)
-        insert_services(services)
+        insert_services(db, services)
         time.sleep(1)
 
     time.sleep(5)
