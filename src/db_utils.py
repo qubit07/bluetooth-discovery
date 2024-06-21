@@ -12,7 +12,7 @@ def get_connection_string():
 def connect_to_database(conn_str):
     if conn_str is None:
         raise ValueError("connection string not found in environment variables.")
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(conn_str)
     return conn
 
 def create_devices_table(conn):
