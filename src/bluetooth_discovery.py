@@ -1,10 +1,11 @@
 import time
-from db_utils import load_env_variables, get_mongo_connection_string, connect_to_mongo, insert_devices, insert_services
+from db_utils import load_env_variables, get_connection_string, connect_to_database, insert_devices, insert_services
 from bluetooth_utils import find_devs, find_services
 
 load_env_variables()
-mongo_conn_str = get_mongo_connection_string()
-db = connect_to_mongo(mongo_conn_str)
+conn_str = get_connection_string()
+db = connect_to_database(conn_str)
+print("connect to database: %s" % conn_str)
 
 print("starting discover devices!")
 while True:
@@ -14,10 +15,8 @@ while True:
     
     for (addr,name) in devices:
         services = find_services(addr)
-        print(f"found services for addr = {addr},  services = {len(services)}")
         insert_services(services)
         time.sleep(1)
-
 
     time.sleep(5)
 

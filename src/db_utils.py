@@ -1,32 +1,66 @@
 import os
 from dotenv import load_dotenv
-from pymongo import MongoClient
+import sqlite3
 
 def load_env_variables():
     dotenv_path = "../environment.env"
     load_dotenv(dotenv_path)
 
-def get_mongo_connection_string():
-    return os.getenv('MONGO_CONNECTION_STRING')
+def get_connection_string():
+    return os.getenv('DB_CONNECTION_STRING')
 
-def connect_to_mongo(mongo_conn_str):
-    if mongo_conn_str is None:
-        raise ValueError("mongoDB connection string not found in environment variables.")
-    client = MongoClient(mongo_conn_str)
-    db = client.get_database()
-    return db
+def connect_to_database(conn_str):
+    if conn_str is None:
+        raise ValueError("connection string not found in environment variables.")
+    conn = sqlite3.connect(db_path)
+    return conn
 
-def insert_devices(db, devices):
-    collection = db['devices']
-    for device in devices:
-          if not collection.find_one({"addr": device["addr"]}):
-            collection.insert_one(device)
-            print(f"add new device: Addr = {device['addr']}, Name = {device['name']}")
+def create_devices_table(conn):
+    # Tabelle 'devices' erstellen, falls sie nicht existiert
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS devices (
+            address TEXT PRIMARY KEY,
+            name TEXT  
+        )
+    ''')
+    conn.commit()
 
-def insert_services(db, services):
-    collection = db['services']
-    for service in services:
-            collection.insert_one(service)
+def create_services_table(conn):
+    # Tabelle 'services' erstellen, falls sie nicht existiert
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS services (
+            name TEXT,
+            protocol TEXT,
+            port INTEGER,
+            PRIMARY KEY (name, protocol, port)
+        )
+    ''')
+    conn.commit()
+
+def insert_devices(conn, devices):
+    cursor = conn.cursor()
+    for (addr, name) in devices:
+        cursor.execute('SELECT * FROM devices WHERE address=?', (addr))
+        existing_device = cursor.fetchone()
+
+        if existing_device == None:
+            cursor.execute('INSERT INTO devices (address, name) VALUES (?, ?)', (addr, name))
+            conn.commit()
+            print(f"add new device: address = {addr}, name = {name}")
+
+
+def insert_services(conn, services):
+    cursor = conn.cursor()
+    for (name, protocol, port) in services:
+        cursor.execute('SELECT * FROM services WHERE name=? AND ', (name, protocol, port))
+        existing_device = cursor.fetchone()
+
+        if existing_device == None:
+            cursor.execute('INSERT INTO services (address, name) VALUES (?, ?, ?)', (name, protocol, port))
+            conn.commit()
+            print(f"add new service:  name = {name}, protocol = {protocol}, port = {port}")
 
 
 
