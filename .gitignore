@@ -1,4 +1,4 @@
 *.pyc
 *.pyo
 *.log
-devices.xml
+environment.ev
