@@ -54,7 +54,6 @@ def insert_devices(conn, devices):
 def insert_services(conn, services):
     cursor = conn.cursor()
     for service in services:
-        print(f"add new service:  name = {service['name']}, protocol = {service['protocol']}, port = {service['port']}")
         cursor.execute('SELECT * FROM services WHERE name=? AND protocol=? AND port=?', [service['name'], service['protocol'], service['port']])
         existing_device = cursor.fetchone()
 
